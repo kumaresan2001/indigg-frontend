@@ -1,10 +1,9 @@
 import { Participants } from "./Participants.jsx";
-// import { AddMovie } from "./AddMovie";
 import { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../global";
 export function ParticipantList() {
   const [participantlist, setParticipantList] = useState([]);
@@ -15,17 +14,16 @@ export function ParticipantList() {
   };
 
   useEffect(() => getParticipant(), []);
-  const deleteMovie = async (id) => {
+  const deleteParticipant = async (id) => {
     await fetch(`${API}/participant/${id}`, {
       method: "DELETE",
     });
     getParticipant();
   };
-  //   const Navigate = useNavigate();
+  const Navigate = useNavigate();
 
   return (
     <div>
-      {/* <AddMovie movielist={movielist} setMovieList={setMovieList} /> */}
       <div className="movie-list">
         {participantlist.map((mv) => (
           <Participants
@@ -34,7 +32,7 @@ export function ParticipantList() {
             id={mv._id}
             deleteButton={
               <IconButton
-                onClick={() => deleteMovie(mv._id)}
+                onClick={() => deleteParticipant(mv._id)}
                 aria-label="delete"
                 sx={{ marginLeft: "auto" }}
                 color="error"
@@ -44,7 +42,7 @@ export function ParticipantList() {
             }
             editButton={
               <IconButton
-                // onClick={() => Navigate(`/movielist/edit/${mv._id}`)}
+                onClick={() => Navigate(`/participant/edit/${mv._id}`)}
                 aria-label="delete"
                 sx={{ marginLeft: "auto" }}
                 color="secondary"

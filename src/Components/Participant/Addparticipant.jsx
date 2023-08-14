@@ -4,54 +4,53 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { API } from "../../global";
-export function Addtournament() {
+export function Addparticipant() {
   const formValidationSchema = yup.object({
-    tourname: yup.string().required(),
+    partname: yup.string().required(),
     images: yup.string().required().min(4).url(),
-    date: yup.date().required(),
 
     status: yup.string().required(),
-    partname1: yup.string().required(),
+    tourname: yup.string().required(),
   });
 
   const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
     useFormik({
       initialValues: {
-        tourname: "",
+        partname: "",
         images: "",
-        date: "",
+
         status: "",
-        partname1: "",
+        tourname: "",
       },
       validationSchema: formValidationSchema,
-      onSubmit: (newTournament) => {
-        console.log("form values", newTournament);
-        addTournament(newTournament);
+      onSubmit: (newParticipant) => {
+        console.log("form values", newParticipant);
+        addParticipant(newParticipant);
       },
     });
   const Navigate = useNavigate();
-  const addTournament = async (newTournament) => {
-    await fetch(`${API}/tournament`, {
+  const addParticipant = async (newParticipant) => {
+    await fetch(`${API}/participant`, {
       method: "POST",
-      body: JSON.stringify(newTournament),
+      body: JSON.stringify(newParticipant),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    Navigate("/tournament");
+    Navigate("/participant");
   };
   return (
     <form onSubmit={handleSubmit} className="add-movie-form">
       <TextField
-        name="tourname"
+        name="partname"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.tourname}
-        label="Tournamet Name"
+        value={values.partname}
+        label="Participant Name"
         variant="outlined"
-        error={touched.tourname && errors.tourname}
+        error={touched.partname && errors.partname}
         helperText={
-          touched.tourname && errors.tourname ? errors.tourname : null
+          touched.partname && errors.partname ? errors.partname : null
         }
       />
       <TextField
@@ -66,17 +65,6 @@ export function Addtournament() {
       />
 
       <TextField
-        name="date"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.date}
-        label="date"
-        variant="outlined"
-        error={touched.date && errors.date}
-        helperText={touched.date && errors.date ? errors.date : null}
-      />
-
-      <TextField
         name="status"
         onChange={handleChange}
         onBlur={handleBlur}
@@ -87,20 +75,20 @@ export function Addtournament() {
         helperText={touched.status && errors.status ? errors.status : null}
       />
       <TextField
-        name="partname1"
+        name="tourname"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.partname1}
-        label="Particient Name"
+        value={values.tourname}
+        label="Tournament Name"
         variant="outlined"
-        error={touched.partname1 && errors.partname1}
+        error={touched.tourname && errors.tourname}
         helperText={
-          touched.partname1 && errors.partname1 ? errors.partname1 : null
+          touched.tourname && errors.tourname ? errors.tourname : null
         }
       />
 
       <Button type="submit" variant="containd">
-        add tournament
+        add participant
       </Button>
     </form>
   );

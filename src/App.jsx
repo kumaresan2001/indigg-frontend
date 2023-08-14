@@ -1,21 +1,20 @@
-import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
-
 import { ParticipantList } from "./Components/Participant/ParticipantList.jsx";
 import { Addtournament } from "./Components/Tournament/Addtournament.jsx";
 import { TournamentList } from "./Components/Tournament/TournamentList.jsx";
+import { Edittournament } from "./Components/Tournament/Edittournament.jsx";
+import { Addparticipant } from "./Components/Participant/Addparticipant.jsx";
+import { Editparticipant } from "./Components/Participant/Editparticipant.jsx";
+
 function App() {
   const Navigate = useNavigate();
   const [mode, setMode] = useState("light");
@@ -49,6 +48,12 @@ function App() {
               <Button color="inherit" onClick={() => Navigate("/participant")}>
                 Participant
               </Button>
+              <Button
+                color="inherit"
+                onClick={() => Navigate("/participant/add")}
+              >
+                Addparticipant
+              </Button>
 
               <Button
                 color="inherit"
@@ -66,8 +71,11 @@ function App() {
 
           <Routes>
             <Route path="/tournament" element={<TournamentList />} />
-            <Route path="/participant" element={<ParticipantList />} />
             <Route path="/tournament/add" element={<Addtournament />} />
+            <Route path="/tournament/edit/:id" element={<Edittournament />} />
+            <Route path="/participant" element={<ParticipantList />} />
+            <Route path="/participant/add" element={<Addparticipant />} />
+            <Route path="/participant/edit/:id" element={<Editparticipant />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -1,24 +1,17 @@
 import { useState } from "react";
-
-// import { Counter } from "./Counter";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
-// import Stack from "@mui/material/Stack";
-// import DeleteIcon from "@mui/icons-material/Delete";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-// import CardMedia from "@mui/material/CardMedia";
-import InfoIcon from "@mui/icons-material/Info";
-// import { useNavigate } from "react-router-dom";
+
 export function Participants({ parti, id, deleteButton, editButton }) {
   const [show, setshow] = useState(true);
 
   const summarystyle = {
     display: show ? "block" : "none",
   };
-  //   const Navigate = useNavigate();
 
   return (
     <Card className="movie-container">
@@ -34,12 +27,6 @@ export function Participants({ parti, id, deleteButton, editButton }) {
             >
               {show ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </IconButton>
-            <IconButton>
-              <InfoIcon
-                color="primary"
-                // onClick={() => Navigate(`/movielist/${id}`)}
-              ></InfoIcon>
-            </IconButton>
           </h2>
           <p className="movie-rating">{parti.status}</p>
         </div>
@@ -49,12 +36,11 @@ export function Participants({ parti, id, deleteButton, editButton }) {
 
           {parti.tourname}
         </p>
+        <CardActions>
+          {deleteButton}
+          {editButton}
+        </CardActions>
       </CardContent>
-      <CardActions>
-        {/* <Counter /> */}
-        {deleteButton}
-        {editButton}
-      </CardActions>
     </Card>
   );
 }

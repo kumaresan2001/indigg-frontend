@@ -3,55 +3,66 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { API } from "../../global";
-export function Addtournament() {
+export function Editparticipant() {
+  const { id } = useParams();
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API}/participant/${id}`)
+      .then((data) => data.json())
+      .then((mvs) => setData(mvs));
+  }, [id]);
+
+  return data ? <EditTournamentForm data={data} /> : <h1>loading</h1>;
+}
+function EditTournamentForm({ data }) {
   const formValidationSchema = yup.object({
     tourname: yup.string().required(),
     images: yup.string().required().min(4).url(),
-    date: yup.date().required(),
-
     status: yup.string().required(),
-    partname1: yup.string().required(),
+    partname: yup.string().required(),
   });
-
   const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
     useFormik({
       initialValues: {
-        tourname: "",
-        images: "",
-        date: "",
-        status: "",
-        partname1: "",
+        tourname: data.tourname,
+        images: data.images,
+        status: data.status,
+        partname: data.partname,
       },
       validationSchema: formValidationSchema,
-      onSubmit: (newTournament) => {
-        console.log("form values", newTournament);
-        addTournament(newTournament);
+      onSubmit: (newParticipant) => {
+        console.log("form values", newParticipant);
+        updataparticipant(newParticipant);
       },
     });
   const Navigate = useNavigate();
-  const addTournament = async (newTournament) => {
-    await fetch(`${API}/tournament`, {
-      method: "POST",
-      body: JSON.stringify(newTournament),
+  const updataparticipant = async (newParticipant) => {
+    await fetch(`${API}/participant/${data._id}`, {
+      method: "PUT",
+      body: JSON.stringify(newParticipant),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    Navigate("/tournament");
+    Navigate("/participant");
   };
   return (
     <form onSubmit={handleSubmit} className="add-movie-form">
       <TextField
-        name="tourname"
+        name="partname"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.tourname}
-        label="Tournamet Name"
+        value={values.partname}
+        label="PartIcipant Name"
         variant="outlined"
-        error={touched.tourname && errors.tourname}
+        error={touched.partname && errors.tpartname1}
         helperText={
-          touched.tourname && errors.tourname ? errors.tourname : null
+          touched.partname && errors.partname ? errors.partname : null
         }
       />
       <TextField
@@ -66,17 +77,6 @@ export function Addtournament() {
       />
 
       <TextField
-        name="date"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.date}
-        label="date"
-        variant="outlined"
-        error={touched.date && errors.date}
-        helperText={touched.date && errors.date ? errors.date : null}
-      />
-
-      <TextField
         name="status"
         onChange={handleChange}
         onBlur={handleBlur}
@@ -87,20 +87,20 @@ export function Addtournament() {
         helperText={touched.status && errors.status ? errors.status : null}
       />
       <TextField
-        name="partname1"
+        name="tourname"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.partname1}
-        label="Particient Name"
+        value={values.tourname}
+        label="Tournament Name"
         variant="outlined"
-        error={touched.partname1 && errors.partname1}
+        error={touched.tourname && errors.tourname}
         helperText={
-          touched.partname1 && errors.partname1 ? errors.partname1 : null
+          touched.tourname && errors.tourname ? errors.tourname : null
         }
       />
 
-      <Button type="submit" variant="containd">
-        add tournament
+      <Button type="submit" color="success" variant="containd">
+        save
       </Button>
     </form>
   );
