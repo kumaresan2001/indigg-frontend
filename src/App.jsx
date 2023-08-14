@@ -13,10 +13,9 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
-import { TournamentList } from "./components/Tournament/TournamentList.jsx";
 import { ParticipantList } from "./Components/Participant/ParticipantList.jsx";
 import { Addtournament } from "./Components/Tournament/Addtournament.jsx";
-
+// import{TournamentList} from "./Components/Tournament/T.jsx"
 function App() {
   const Navigate = useNavigate();
   const [mode, setMode] = useState("light");
@@ -66,7 +65,7 @@ function App() {
           </AppBar>
 
           <Routes>
-            <Route path="/tournament" element={<TournamentList />} />
+            {/* <Route path="/tournament" element={<TournamentList />} /> */}
             <Route path="/participant" element={<ParticipantList />} />
             <Route path="/tournament/add" element={<Addtournament />} />
             <Route path="*" element={<NotFound />} />
