@@ -13,7 +13,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
-import { TournamentList } from "./components/tournament/TournamentList";
+import { TournamentList } from "./components/Tournament/TournamentList";
 import { ParticipantList } from "./Components/Participant/ParticipantList";
 import { Addtournament } from "./Components/Tournament/Addtournament";
 
